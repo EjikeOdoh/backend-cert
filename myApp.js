@@ -1,8 +1,12 @@
 require("dotenv").config();
 let express = require("express");
+let bodyParser = require("body-parser");
+
 let app = express();
 
 const staticPath = __dirname + "/public";
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(function middleware(req, res, next) {
   let string = req.method + " " + req.path + " - " + req.ip;
@@ -26,7 +30,10 @@ app
       name: `${first} ${last}`,
     });
   })
-  .post();
+  .post(function (req, res) {
+    const { first, last } = req.body;
+    return res.json({ name: `${first} ${last}` });
+  });
 
 app.get("/json", (req, res) => {
   if (process.env.MESSAGE_STYLE === "uppercase") {
