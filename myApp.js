@@ -18,6 +18,16 @@ app.get("/", (req, res) => {
   return res.sendFile(path);
 });
 
+app
+  .route("/name")
+  .get(function (req, res) {
+    const { first, last } = req.query;
+    return res.json({
+      name: `${first} ${last}`,
+    });
+  })
+  .post();
+
 app.get("/json", (req, res) => {
   if (process.env.MESSAGE_STYLE === "uppercase") {
     return res.json({ message: "Hello json".toUpperCase() });
