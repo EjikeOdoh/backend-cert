@@ -26,4 +26,16 @@ app.get("/json", (req, res) => {
   }
 });
 
+app.get(
+  "/now",
+  function (req, res, next) {
+    req.time = new Date();
+    next();
+  },
+  function (req, res) {
+    let time = req.time;
+    return res.json({ time });
+  }
+);
+
 module.exports = app;
