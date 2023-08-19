@@ -2,7 +2,14 @@ require("dotenv").config();
 let express = require("express");
 let app = express();
 
+function simpleLogger(req, res, next) {
+  console.log(req.method, req.path, req.ip);
+  next();
+}
+
 const staticPath = __dirname + "/public";
+
+app.use(simpleLogger);
 
 app.use("/public", express.static(staticPath));
 
